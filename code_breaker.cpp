@@ -44,7 +44,22 @@ void inputNum(char input[], int num_digit) {
 
 	while (1) {
 		printf("%d桁の数字を入力してください:", num_digit);
-		scanf("%s", input_str);
+		scanf_s("%s", input_str);
+
+		if (strlen(input_str) != num_digit) {
+			printf("%d桁じゃないです...\n", num_digit);
+			continue;
+		}
+
+		if (!is_allDigit(input_str, num_digit)) {
+			printf("数字以外が入力されてます...\n");
+			continue;
+		}
+
+		if (!is_allDifferent(input_str, num_digit)) {
+			printf("同じ数字が入力されてます...\n");
+			continue;
+		}
 
 
 		for (int i = 0; i < num_digit; i++) {
@@ -130,23 +145,30 @@ int main()
 	// ランダムな値を利用する為の準備
 	srand(time(NULL));
 
-	int array[9];
+	//int array[9];
 	char answer[NUM_DIGIT];
 	int num_hit, num_blow;
 
 	// 乱数の範囲は1〜9 
-	for (int i = 0; i < 9; i++) 
+	/*for (int i = 0; i < 9; i++) 
 	{
 		array[i] = i + 1;
-	}
+	}*/
+
+	/* 1.正解を用意する */
+	char nums[] = {
+		'0', '1', '2', '3', '4',
+		'5', '6', '7', '8', '9'
+	};
+	int num_num = sizeof(nums) / sizeof(nums[0]);
 
 	//arrayの中身をシャッフル 
-	randNum(array, sizeof(array) / sizeof(array[0]));
+	//randNum(nums, sizeof(array) / sizeof(array[0]));
 
 	for (int i = 0; i < NUM_DIGIT; i++)
 	{
 		// 重複なしの乱数を生成（取得）
-		answer[i] = array[i];
+		answer[i] = nums[i];
 	}
 	
 	do {
